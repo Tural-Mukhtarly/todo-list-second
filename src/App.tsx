@@ -121,7 +121,6 @@ function App() {
 
     return (
         <div className="App">
-            Проверка коммита 2
             <AddItemForm addItem={addTodolist} />
             {
                 todolists.map(tl => {
