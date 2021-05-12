@@ -23,7 +23,7 @@ function App() {
     const changeFilter = (value: FilterValuesType) => {
         setfilter(value)
     }
-    
+
 
     let filterValues = state;
 
@@ -39,7 +39,7 @@ function App() {
         setstate(resultState)
     }
 
-    function addTask(task:string) {
+    function addTask(task: string) {
         let newTask = {
             id: v1(),
             title: task,
@@ -48,9 +48,23 @@ function App() {
         setstate([...state, newTask])
     }
 
+    function changeStatus(taskId: string, isDone: boolean) {
+        let task = state.find(e => e.id === taskId)
+        if (task) {
+            task.isDone = isDone
+        }
+        setstate([...state])
+    }
+
     return (
         <div className="App">
-            <TodoList title={'What to Learn'} tasks={filterValues} removeTasks={removeTasks} changeFilter={changeFilter} addTask={addTask} />
+            <TodoList
+                title={'What to Learn'}
+                tasks={filterValues}
+                removeTasks={removeTasks}
+                changeFilter={changeFilter}
+                addTask={addTask}
+                changeStatus={changeStatus} />
         </div>
     );
 }

@@ -7,9 +7,10 @@ type TodoListType = {
     removeTasks: (id: string) => void
     changeFilter: (value: FilterValuesType) => void
     addTask: (task: string) => void
+    changeStatus: (taskId: string, isDone: boolean) => void
 }
 
-const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask }): ReactElement => {
+const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask, changeStatus }): ReactElement => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => { setTask(e.currentTarget.value) }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => { if (e.charCode === 13) { addItem(taske) } }
@@ -18,11 +19,14 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
     const onCompletedChangeFilter = () => changeFilter("completed")
 
 
+
     const [taske, setTask] = useState('')
 
     function addItem(value: string) {
-        addTask(value)
-        setTask('')
+        if (value.trim() !== "") {
+            addTask(value.trim())
+            setTask('')
+        }
     }
 
     return (
@@ -35,10 +39,14 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
             <button onClick={() => addItem(taske)}>+</button>
             <ul>
                 {
-                    tasks.map((e) => {
-                        return <li key={e.id}><input type="checkbox" checked={e.isDone} />
-                            <span>{e.title}</span>
-                            <button onClick={() => { removeTasks(e.id) }}>x</button>
+                    tasks.map((t) => {
+
+                        const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
+                            changeStatus(t.id, e.currentTarget.checked)
+                        }
+                        return <li key={t.id}><input onChange={onChangeStatus} type="checkbox" checked={t.isDone} />
+                            <span>{t.title}</span>
+                            <button onClick={() => { removeTasks(t.id) }}>x</button>
                         </li>
                     })
                 }
