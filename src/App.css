@@ -1,3 +1,18 @@
 .App{
     padding: 10px;
 }
+.error{
+    color: red;
+}
+button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(172, 172, 172);
+}
+.active-filter{
+    background-color: red;
+    color: white;
+    border: none;
+    outline: none;
+}
