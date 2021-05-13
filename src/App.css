@@ -1,5 +1,6 @@
 .App{
     padding: 10px;
+    display: flex;
 }
 .error{
     color: red;
@@ -15,4 +16,7 @@ button{
     color: white;
     border: none;
     outline: none;
+}
+.todoList{
+    margin: 0 20px 0 0 ;
 }

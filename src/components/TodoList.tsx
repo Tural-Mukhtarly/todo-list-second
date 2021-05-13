@@ -2,16 +2,17 @@ import React, { ChangeEvent, FC, ReactElement, useState, KeyboardEvent } from 'r
 import { FilterValuesType, TasksType } from '../App'
 
 type TodoListType = {
+    id: string
     title: string
     tasks: Array<TasksType>
-    removeTasks: (id: string) => void
-    changeFilter: (value: FilterValuesType) => void
-    addTask: (task: string) => void
-    changeStatus: (taskId: string, isDone: boolean) => void
+    removeTasks: (id: string, todoListId: string) => void
+    changeFilter: (value: FilterValuesType, id: string) => void
+    addTask: (task: string, todoListId: string) => void
+    changeStatus: (taskId: string, isDone: boolean, todoListId: string) => void
     filter: string
 }
 
-const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask, changeStatus, filter }): ReactElement => {
+const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask, changeStatus, filter, id }): ReactElement => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => { setTask(e.currentTarget.value) }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -19,9 +20,9 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
         if (e.charCode === 13) { addItem(taske) }
     }
 
-    const onAllChangeFilter = () => changeFilter("all")
-    const onActiveChangeFilter = () => changeFilter("active")
-    const onCompletedChangeFilter = () => changeFilter("completed")
+    const onAllChangeFilter = () => changeFilter("all", id)
+    const onActiveChangeFilter = () => changeFilter("active", id)
+    const onCompletedChangeFilter = () => changeFilter("completed", id)
 
 
 
@@ -30,7 +31,7 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
 
     function addItem(value: string) {
         if (value.trim() !== "") {
-            addTask(value.trim())
+            addTask(value.trim(), id)
             setTask('')
         } else {
             setError('Title is required')
@@ -38,7 +39,7 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
     }
 
     return (
-        <div>
+        <div className="todoList">
             <h3>{title}</h3>
             <input value={taske}
                 onChange={onChangeHandler}
@@ -51,11 +52,11 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
                     tasks.map((t) => {
 
                         const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-                            changeStatus(t.id, e.currentTarget.checked)
+                            changeStatus(t.id, e.currentTarget.checked, id)
                         }
                         return <li key={t.id}><input onChange={onChangeStatus} type="checkbox" checked={t.isDone} />
                             <span>{t.title}</span>
-                            <button onClick={() => { removeTasks(t.id) }}>x</button>
+                            <button onClick={() => { removeTasks(t.id, id) }}>x</button>
                         </li>
                     })
                 }
