@@ -6,28 +6,26 @@ type TodoListType = {
     title: string
     tasks: Array<TasksType>
     removeTasks: (id: string, todoListId: string) => void
-    changeFilter: (value: FilterValuesType, id: string) => void
+    changeFilter: (value: FilterValuesType, todoListId: string) => void
     addTask: (task: string, todoListId: string) => void
     changeStatus: (taskId: string, isDone: boolean, todoListId: string) => void
+    removeTasksObj: (id: string) => void
     filter: string
 }
 
-const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask, changeStatus, filter, id }): ReactElement => {
+const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask, changeStatus, filter, id, removeTasksObj }): ReactElement => {
+    const [taske, setTask] = useState('')
+    const [error, setError] = useState<string | null>(null)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => { setTask(e.currentTarget.value) }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null)
         if (e.charCode === 13) { addItem(taske) }
     }
-
+   
     const onAllChangeFilter = () => changeFilter("all", id)
     const onActiveChangeFilter = () => changeFilter("active", id)
     const onCompletedChangeFilter = () => changeFilter("completed", id)
-
-
-
-    const [taske, setTask] = useState('')
-    const [error, setError] = useState<string | null>(null)
 
     function addItem(value: string) {
         if (value.trim() !== "") {
@@ -37,10 +35,10 @@ const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, a
             setError('Title is required')
         }
     }
-
+   
     return (
         <div className="todoList">
-            <h3>{title}</h3>
+            <h3>{title}<button onClick={() => removeTasksObj(id)}>x</button></h3>
             <input value={taske}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
