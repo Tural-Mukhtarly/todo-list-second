@@ -1,7 +1,8 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
 import { v1 } from 'uuid'
+import AddItemForm from './components/AddItemForm';
 
 export type TasksType = {
     id: string,
@@ -14,6 +15,10 @@ export type TodoListType = {
     title: string
     filter: FilterValuesType
 
+}
+
+type TaskStateType = {
+    [key: string]: Array<TasksType>
 }
 
 export type FilterValuesType = "all" | "active" | "completed"
@@ -31,7 +36,7 @@ function App() {
     ])
 
 
-    let [tasksObj, setTasksObj] = useState({
+    let [tasksObj, setTasksObj] = useState<TaskStateType>({
         [todoListId1]: [
             { id: v1(), title: 'HTML', isDone: true },
             { id: v1(), title: 'CSS', isDone: false },
@@ -97,27 +102,17 @@ function App() {
             title: title,
             filter: "all"
         }
-
         setTodoLists([newTodoList, ...todoLists])
+        setTasksObj({
+            ...tasksObj,
+            [newTodoList.id]: []
+        })
     }
-    const [todoListses, settodoListses] = useState('')
 
-    const onChangeTodoHandler = (e: ChangeEvent<HTMLInputElement>) => { settodoListses(e.currentTarget.value) }
-    const onKeyPressTodoHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13) { addItemTask(todoListses) }
-    }
-    function addItemTask(value: string) {
-        if (value.trim() !== "") {
-            addTodoList(value.trim(),)
-            settodoListses('')
-        }
-    }
+
     return (
         <div className="App">
-            <input value={todoListses}
-                onChange={onChangeTodoHandler}
-                onKeyPress={onKeyPressTodoHandler} />
-            <button onClick={() => addItemTask(todoListses)}>+</button>
+            <AddItemForm addTask={addTodoList} />
             {
                 todoLists.map((tl) => {
 
@@ -131,7 +126,7 @@ function App() {
                     return <TodoList
                         key={tl.id}
                         id={tl.id}
-                        title={tl.title}
+                        todoTitle={tl.title}
                         tasks={tasksObj[tl.id]}
                         removeTasks={removeTasks}
                         changeFilter={changeFilter}
@@ -139,7 +134,7 @@ function App() {
                         changeStatus={changeStatus}
                         filter={tl.filter}
                         removeTasksObj={removeTasksObj}
-                       />
+                    />
                 })
             }
 

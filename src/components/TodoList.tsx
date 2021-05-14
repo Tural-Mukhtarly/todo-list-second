@@ -1,9 +1,10 @@
-import React, { ChangeEvent, FC, ReactElement, useState, KeyboardEvent } from 'react';
+import React, { ChangeEvent, FC, ReactElement } from 'react';
 import { FilterValuesType, TasksType } from '../App'
+import AddItemForm from './AddItemForm';
 
 type TodoListType = {
     id: string
-    title: string
+    todoTitle: string
     tasks: Array<TasksType>
     removeTasks: (id: string, todoListId: string) => void
     changeFilter: (value: FilterValuesType, todoListId: string) => void
@@ -13,38 +14,23 @@ type TodoListType = {
     filter: string
 }
 
-const TodoList: FC<TodoListType> = ({ tasks, title, removeTasks, changeFilter, addTask, changeStatus, filter, id, removeTasksObj }): ReactElement => {
-    const [taske, setTask] = useState('')
-    const [error, setError] = useState<string | null>(null)
+const TodoList: FC<TodoListType> = ({ tasks, todoTitle, removeTasks, changeFilter, addTask, changeStatus, filter, id, removeTasksObj }): ReactElement => {
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => { setTask(e.currentTarget.value) }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (e.charCode === 13) { addItem(taske) }
-    }
-   
+
     const onAllChangeFilter = () => changeFilter("all", id)
     const onActiveChangeFilter = () => changeFilter("active", id)
     const onCompletedChangeFilter = () => changeFilter("completed", id)
 
-    function addItem(value: string) {
-        if (value.trim() !== "") {
-            addTask(value.trim(), id)
-            setTask('')
-        } else {
-            setError('Title is required')
-        }
+
+    function addItem(title: string) {
+        addTask(title, id)
     }
-   
+
+
     return (
         <div className="todoList">
-            <h3>{title}<button onClick={() => removeTasksObj(id)}>x</button></h3>
-            <input value={taske}
-                onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}
-            />
-            <button onClick={() => addItem(taske)}>+</button>
-            {error && <div className="error">{error}</div>}
+            <h3>{todoTitle}<button onClick={() => removeTasksObj(id)}>x</button></h3>
+            <AddItemForm addTask={addItem} />
             <ul>
                 {
                     tasks.map((t) => {
