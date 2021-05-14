@@ -20,26 +20,8 @@ const AddItemForm: FC<AddItemFormType> = ({ addTask }): ReactElement => {
             setError('Title is required')
         }
     }
-    // const [todoListses, settodoListses] = useState('')
-
-    // const onChangeTodoHandler = (e: ChangeEvent<HTMLInputElement>) => { settodoListses(e.currentTarget.value) }
-    // const onKeyPressTodoHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    //     if (e.charCode === 13) { addItemTask(todoListses) }
-    // }
-    // function addItemTask(value: string) {
-    //     if (value.trim() !== "") {
-    //         addTodoList(value.trim(),)
-    //         settodoListses('')
-    //     }
-    // }
-
-
     return (
         <div>
-            {/* <input value={todoListses}
-                onChange={onChangeTodoHandler}
-                onKeyPress={onKeyPressTodoHandler} />
-            <button onClick={() => addItemTask(todoListses)}>+</button> */}
             <input value={title}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
