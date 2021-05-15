@@ -5,7 +5,6 @@ import { v1 } from 'uuid'
 import AddItemForm from './components/AddItemForm';
 import { Paper, AppBar, Button, Container, Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { MenuOpen } from '@material-ui/icons';
-import { todolistReducer } from './state/todolist-reducer'
 
 export type TasksType = {
     id: string,
@@ -31,13 +30,13 @@ function AppWithReducers() {
     const todoListId2 = v1()
     const todoListId3 = v1()
 
-    let [todoLists, dispatchTodoListReducer] = useReducer(todolistReducer, [
+    let [todoLists, setTodoLists] = useState([
         { id: todoListId1, title: "What to learn", filter: "all" },
         { id: todoListId2, title: "What to buy", filter: "all" },
         { id: todoListId3, title: "What to remember", filter: "all" }
     ])
 
-    let [tasksObj, dispatchToTasksReducer] = useReducer(tasksReducer,{
+    let [tasksObj, setTasksObj] = useState({
         [todoListId1]: [
             { id: v1(), title: 'HTML', isDone: true },
             { id: v1(), title: 'CSS', isDone: false },
