@@ -17,10 +17,9 @@ export type TodoListType = {
     id: string,
     title: string
     filter: FilterValuesType
-
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]: Array<TasksType>
 }
 
@@ -32,13 +31,13 @@ function AppWithReducers() {
     const todoListId2 = v1()
     const todoListId3 = v1()
 
-    let [todoLists, setTodoLists] = useReducer(todolistReducer, [
+    let [todoLists, dispatchTodoListReducer] = useReducer(todolistReducer, [
         { id: todoListId1, title: "What to learn", filter: "all" },
         { id: todoListId2, title: "What to buy", filter: "all" },
         { id: todoListId3, title: "What to remember", filter: "all" }
     ])
 
-    let [tasksObj, setTasksObj] = useState<TaskStateType>({
+    let [tasksObj, dispatchToTasksReducer] = useReducer(tasksReducer,{
         [todoListId1]: [
             { id: v1(), title: 'HTML', isDone: true },
             { id: v1(), title: 'CSS', isDone: false },
