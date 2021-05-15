@@ -4,7 +4,7 @@ import TodoList from './components/TodoList';
 import { v1 } from 'uuid'
 import AddItemForm from './components/AddItemForm';
 import { Paper, AppBar, Button, Container, Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
-import { MenuOpen, Menu } from '@material-ui/icons';
+import { MenuOpen} from '@material-ui/icons';
 
 export type TasksType = {
     id: string,
@@ -147,7 +147,7 @@ function App() {
 
                             if (tl.filter === "active") {
                                 tasksObj[tl.id] = tasksObj[tl.id].filter(e => e.isDone === false)
-                            }
+                             }
                             if (tl.filter === "completed") {
                                 tasksObj[tl.id] = tasksObj[tl.id].filter(e => e.isDone === true)
                             }
