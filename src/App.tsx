@@ -144,12 +144,12 @@ function App() {
                 <Grid container spacing={10}>
                     {
                         todoLists.map((tl) => {
-
+                            let taskObjNew = tasksObj[tl.id]
                             if (tl.filter === "active") {
-                                tasksObj[tl.id] = tasksObj[tl.id].filter(e => e.isDone === false)
+                                taskObjNew = taskObjNew.filter(e => e.isDone === false)
                             }
                             if (tl.filter === "completed") {
-                                tasksObj[tl.id] = tasksObj[tl.id].filter(e => e.isDone === true)
+                                taskObjNew = taskObjNew.filter(e => e.isDone === true)
                             }
 
                             return <Grid item>
@@ -158,7 +158,7 @@ function App() {
                                         key={tl.id}
                                         id={tl.id}
                                         todoTitle={tl.title}
-                                        tasks={tasksObj[tl.id]}
+                                        tasks={taskObjNew}
                                         removeTasks={removeTasks}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
