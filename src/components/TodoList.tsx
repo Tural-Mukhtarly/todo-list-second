@@ -37,6 +37,7 @@ const TodoList: FC<TodoListType> = ({
     const onActiveChangeFilter = () => changeFilter("active", id)
     const onCompletedChangeFilter = () => changeFilter("completed", id)
 
+    console.log(tasks);
 
     function addItem(title: string) {
         addTask(title, id)
