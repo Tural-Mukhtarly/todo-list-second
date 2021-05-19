@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import { TaskType, Todolist } from './components/Todolist';
+import { TaskType, Todolist } from './Todolist';
 import { v1 } from 'uuid';
-import { AddItemForm } from './components/AddItemForm';
+import { AddItemForm } from './AddItemForm';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 
@@ -16,7 +16,6 @@ export type TodolistType = {
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-
 
 function App() {
     let todolistId1 = v1();
